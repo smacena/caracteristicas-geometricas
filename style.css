@@ -18,6 +18,8 @@ header button { font-size: 2.2vmin; padding: 1vmin 2vmin; }
 #tela-inicio h2, #tela-fim h2 { font-size: 5vmin; margin: 0; }
 #aviso-envio { font-size: 2.4vmin; margin: 0; max-width: 80vmin; color: #ffd54f; }
 #tela-inicio label { font-size: 2.6vmin; }
+#erro-numero { margin: 0; min-height: 3.2vmin; font-size: 2.6vmin; color: #ff8a80; max-width: 80vmin; }
+#identificacao { font-size: 3vmin; font-weight: 700; color: #ffd54f; white-space: nowrap; }
 #jogador { font-size: 4vmin; padding: 1.5vmin 2vmin; width: min(60vmin, 90vw); text-align: center; }
 #comecar, #proximo {
   font-size: 4.5vmin; padding: 3vmin 7vmin; border: 0; border-radius: 2.5vmin;

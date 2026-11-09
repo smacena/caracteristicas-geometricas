@@ -11,6 +11,7 @@
 <body>
   <header>
     <h1>Características Geométricas</h1>
+    <span id="identificacao" hidden></span>
     <button id="camera">Ativar câmera</button>
     <button id="tela-cheia">Tela cheia</button>
   </header>
@@ -18,7 +19,8 @@
   <section id="tela-inicio">
     <h2>Que características tem o que você vai ver?</h2>
     <label for="jogador">Número de identificação</label>
-    <input id="jogador" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="8">
+    <input id="jogador" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="8" required>
+    <p id="erro-numero" role="alert"></p>
     <button id="comecar">Começar</button>
   </section>
 

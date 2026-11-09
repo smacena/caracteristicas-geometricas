@@ -7,6 +7,7 @@ export const CAMPOS = [
 ];
 
 const CHAVE_FILA = 'caracteristicas.fila';
+const CHAVE_APARELHO = 'caracteristicas.aparelho';
 
 function lerFila() {
   try {
@@ -21,6 +22,42 @@ function gravarFila(fila) {
     localStorage.setItem(CHAVE_FILA, JSON.stringify(fila));
   } catch {
     // sem armazenamento disponível: segue sem fila
+  }
+}
+
+// Identifica este celular/navegador. Permite tentar de novo o mesmo número sem ser barrado.
+function idAparelho() {
+  try {
+    let id = localStorage.getItem(CHAVE_APARELHO);
+    if (!id) {
+      id = 'A' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+      localStorage.setItem(CHAVE_APARELHO, id);
+    }
+    return id;
+  } catch {
+    return 'A' + Math.random().toString(36).slice(2, 10).toUpperCase();
+  }
+}
+
+// Pergunta à planilha se o número está livre e o reserva.
+// Retorna: 'ok', 'ocupado', 'erro' (resposta inesperada), 'sem_conexao' ou 'sem_verificacao'
+// (quando o endereço da planilha não está configurado, como em testes locais).
+export async function reservarNumero(numero, endereco) {
+  if (!endereco) return 'sem_verificacao';
+  const controle = new AbortController();
+  const limite = setTimeout(() => controle.abort(), 15000);
+  try {
+    const url = `${endereco}?acao=reservar&id=${encodeURIComponent(numero)}&aparelho=${encodeURIComponent(idAparelho())}`;
+    const resposta = await fetch(url, { signal: controle.signal });
+    if (!resposta.ok) return 'sem_conexao';
+    const texto = (await resposta.text()).trim();
+    if (texto === 'ok') return 'ok';
+    if (texto === 'ocupado') return 'ocupado';
+    return 'erro';
+  } catch {
+    return 'sem_conexao';
+  } finally {
+    clearTimeout(limite);
   }
 }
 

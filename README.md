@@ -1,3 +1,13 @@
+## Número de identificação
+
+O jogador é identificado só por um número (o campo aceita apenas dígitos, de 1 a 8), sem nome. O número é obrigatório,
+aparece no topo da tela durante o jogo e **não pode ser usado por duas pessoas**: antes de começar, o jogo pergunta à
+planilha se o número está livre e o reserva. Depois que a rodada é enviada, o número fica definitivamente ocupado.
+"007" e "7" contam como o mesmo número. A lista fica na aba "Numeros" da planilha.
+
+Sem internet o jogo não começa (não dá para conferir o número). Em testes locais, com `enderecoRegistro` vazio, a
+conferência é pulada.
+
 # Características Geométricas
 
 Jogo para ligar imagens (objetos do dia a dia, figuras planas e sólidos geométricos) às suas características.
@@ -33,6 +43,9 @@ Cada rodada confirmada é enviada, sozinha, a uma planilha do Google. Configura�
 A planilha tem uma linha por característica (10 por rodada). Para analisar, use Arquivo > Fazer download > CSV e
 suba o arquivo em uma IA. Se o celular estiver sem internet, a rodada fica guardada nele e é reenviada quando a
 conexão voltar (a planilha ignora rodadas repetidas).
+
+Ao **alterar o `Code.gs`**, cole o código novo no editor e vá em Implantar > Gerenciar implantações > ícone de lápis >
+Versão: "Nova versão" > Implantar. Assim o endereço continua o mesmo. Se criar uma implantação nova, o endereço muda.
 
 Atenção: o endereço do app fica no código público do GitHub. Quem o encontrar poderia enviar linhas falsas; a
 planilha só recebe dados e não os revela. Se alterar `Code.gs`, é preciso criar uma nova implantação.

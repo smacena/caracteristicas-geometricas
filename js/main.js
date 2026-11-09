@@ -1,7 +1,7 @@
 import { figuras, itens } from './dados.js';
 import { config } from './config.js';
 import { sortearRodada, alternar, montarLinhas, validarDados } from './jogo.js';
-import { novoIdRodada, registrarRodada, enviarPendentes, pendentes } from './registro.js';
+import { novoIdRodada, registrarRodada, enviarPendentes, pendentes, reservarNumero } from './registro.js';
 import { iniciarCamera } from './camera.js';
 
 const problemas = validarDados(figuras);
@@ -18,6 +18,8 @@ const listaOpcoes = document.getElementById('opcoes');
 const instrucao = document.getElementById('instrucao');
 const textoInstrucao = instrucao.textContent;
 const avisoEnvio = document.getElementById('aviso-envio');
+const erroNumero = document.getElementById('erro-numero');
+const rotuloJogador = document.getElementById('identificacao');
 const botaoComecar = document.getElementById('comecar');
 const botaoConfirmar = document.getElementById('confirmar');
 const botaoProximo = document.getElementById('proximo');
@@ -58,8 +60,32 @@ function aoMarcar(indice) {
   atualizarMarcas();
 }
 
-function comecar() {
-  jogador = campoJogador.value.replace(/\D/g, '');
+async function comecar() {
+  const numero = campoJogador.value.replace(/\D/g, '');
+  erroNumero.textContent = '';
+  if (!numero) {
+    erroNumero.textContent = 'Digite o seu número de identificação para começar.';
+    campoJogador.focus();
+    return;
+  }
+
+  botaoComecar.disabled = true;
+  erroNumero.textContent = 'Verificando o número...';
+  const situacao = await reservarNumero(numero, config.enderecoRegistro);
+  botaoComecar.disabled = false;
+
+  if (situacao === 'ocupado') {
+    erroNumero.textContent = 'Esse número já foi usado por outra pessoa. Escolha outro número.';
+    campoJogador.focus();
+    return;
+  }
+  if (situacao === 'sem_conexao' || situacao === 'erro') {
+    erroNumero.textContent = 'Não foi possível verificar o número agora. Confira a internet e tente de novo.';
+    return;
+  }
+  erroNumero.textContent = '';
+
+  jogador = numero;
   try {
     rodada = sortearRodada(itens, figuras, config);
   } catch (erro) {
@@ -75,6 +101,8 @@ function comecar() {
   imagem.src = rodada.item.imagem;
   desenharOpcoes();
   inicio = Date.now();
+  rotuloJogador.textContent = `Nº ${jogador}`;
+  rotuloJogador.hidden = false;
   mostrar('jogo');
 }
 
@@ -125,6 +153,8 @@ function confirmar() {
 
 function proximoJogador() {
   campoJogador.value = '';
+  erroNumero.textContent = '';
+  rotuloJogador.hidden = true;
   mostrar('inicio');
 }
 
