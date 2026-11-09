@@ -1,0 +1,76 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; padding: 2vmin;
+  background: #101820; color: #f2f2f2;
+  font-family: system-ui, sans-serif;
+  height: 100vh; display: flex; flex-direction: column;
+}
+header { display: flex; align-items: center; gap: 2vmin; margin-bottom: 1.5vmin; }
+h1 { margin: 0; font-size: 3.6vmin; flex: 1; }
+header button { font-size: 2.2vmin; padding: 1vmin 2vmin; }
+
+/* Tela inicial e final */
+#tela-inicio, #tela-fim {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3vmin; text-align: center;
+}
+#tela-inicio h2, #tela-fim h2 { font-size: 5vmin; margin: 0; }
+#aviso-envio { font-size: 2.4vmin; margin: 0; max-width: 80vmin; color: #ffd54f; }
+#tela-inicio label { font-size: 2.6vmin; }
+#jogador { font-size: 4vmin; padding: 1.5vmin 2vmin; width: min(60vmin, 90vw); text-align: center; }
+#comecar, #proximo {
+  font-size: 4.5vmin; padding: 3vmin 7vmin; border: 0; border-radius: 2.5vmin;
+  background: #4caf50; color: #fff; cursor: pointer;
+}
+
+/* Tela do jogo: imagem à esquerda, opções à direita */
+#tela-jogo {
+  flex: 1; min-height: 0;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 3vmin;
+}
+#figura { position: relative; background: #f2f2f2; border-radius: 3vmin; }
+#figura img {
+  position: absolute; inset: 4%; width: 92%; height: 92%;
+  object-fit: contain; pointer-events: none;
+}
+#painel { display: flex; flex-direction: column; gap: 1.2vmin; min-height: 0; }
+#instrucao { margin: 0; font-size: 2.4vmin; }
+#opcoes { flex: 1; min-height: 0; display: grid; gap: 1vmin; }
+.opcao {
+  text-align: left; border: 0; border-radius: 1.6vmin; padding: 0 2vmin;
+  background: #2a3b4d; color: #f2f2f2; cursor: pointer;
+  font-size: min(2.6vmin, 2.3vw); line-height: 1.15;
+}
+.opcao.marcada { background: #ffd54f; color: #101820; font-weight: 600; }
+.opcao.marcada::before { content: '✔  '; }
+.opcao { display: flex; align-items: center; gap: 1.5vmin; }
+.opcao.acertou { background: #2e7d32; color: #fff; }
+.opcao.errou { background: #c62828; color: #fff; }
+.opcao .rotulo {
+  margin-left: auto; flex: none; font-size: 0.8em; font-weight: 400;
+  padding: 0.3vmin 1.2vmin; border-radius: 1vmin; background: rgba(0, 0, 0, 0.3);
+}
+#confirmar {
+  height: 9vh; font-size: 3.4vmin; border: 0; border-radius: 2vmin;
+  background: #4caf50; color: #fff; cursor: pointer;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  #tela-jogo { grid-template-columns: 1fr; grid-template-rows: 32% 1fr; }
+  .opcao { font-size: min(2.4vmin, 3.4vw); }
+}
+
+/* Câmera */
+#video {
+  position: fixed; top: 0; left: 0;
+  width: 2px; height: 2px; opacity: 0.01; pointer-events: none;
+}
+#cursor {
+  --p: 0deg;
+  position: fixed; top: 0; left: 0;
+  width: 9vmin; height: 9vmin; border-radius: 50%;
+  border: 1vmin solid #ffd54f;
+  background: conic-gradient(rgba(255, 213, 79, 0.65) var(--p), transparent 0);
+  pointer-events: none; display: none; z-index: 10;
+}

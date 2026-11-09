@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Características Geométricas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Características Geométricas</h1>
+    <button id="camera">Ativar câmera</button>
+    <button id="tela-cheia">Tela cheia</button>
+  </header>
+
+  <section id="tela-inicio">
+    <h2>Que características tem o que você vai ver?</h2>
+    <label for="jogador">Número de identificação</label>
+    <input id="jogador" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="8">
+    <button id="comecar">Começar</button>
+  </section>
+
+  <section id="tela-jogo" hidden>
+    <div id="figura"><img id="imagem" alt=""></div>
+    <div id="painel">
+      <p id="instrucao">Marque as características que valem para a imagem.</p>
+      <div id="opcoes"></div>
+      <button id="confirmar">Confirmar</button>
+    </div>
+  </section>
+
+  <section id="tela-fim" hidden>
+    <h2>Obrigado por jogar!</h2>
+    <p id="aviso-envio"></p>
+    <button id="proximo">Próximo jogador</button>
+  </section>
+
+  <video id="video" playsinline muted></video>
+  <div id="cursor"></div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
